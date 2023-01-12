@@ -41,4 +41,8 @@ COPY files/plugin_overrides/* /var/lib/openvas/plugins/
 # and to provide a functional example inside an unconfigured container.
 COPY files/scan*.json /etc/openvas/
 
+
+
+CMD ["/usr/local/sbin/build-config.sh"]
+
 CMD ["/usr/local/sbin/run-openvas.sh"]
