@@ -36,9 +36,6 @@ parser.add_option('-v', '--verbose',
 
 options, args = parser.parse_args()
 
-if len(sys.argv) < 3:
-    sys.exit('Usage: %s <scan targets> <output file>\r\nUse -h or --help to view options' % sys.argv[0])
-
 hosts = os.environ['TARGET']
 outputfile = os.environ['EXECUTION_ID']
 bucket_name = os.environ['BUCKET']
