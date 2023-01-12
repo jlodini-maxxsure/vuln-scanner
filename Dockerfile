@@ -43,6 +43,4 @@ COPY files/scan*.json /etc/openvas/
 
 
 
-CMD ["/usr/local/sbin/build-config.sh"]
-
-CMD ["/usr/local/sbin/run-openvas.sh"]
+CMD ["/usr/local/sbin/build-config.sh","/usr/local/sbin/run-openvas.sh"]
