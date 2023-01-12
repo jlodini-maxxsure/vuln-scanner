@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     wget curl rsync \
     bzip2 nmap pnscan x42-plugins ike-scan \
-    openvas-scanner openvas-manager \
+    openvas-scanner gvm gvmd \
     openvas-manager-common openvas-cli \
     && apt-get clean
 
