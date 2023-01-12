@@ -2,6 +2,7 @@
 from __future__ import print_function
 
 import os, sys, time, random
+import boto3
 import subprocess
 import optparse
 from lxml import etree
@@ -38,8 +39,9 @@ options, args = parser.parse_args()
 if len(sys.argv) < 3:
     sys.exit('Usage: %s <scan targets> <output file>\r\nUse -h or --help to view options' % sys.argv[0])
 
-hosts = args[0]
-outputfile = args[1]
+hosts = os.environ['TARGET']
+outputfile = os.environ['EXECUTION_ID']
+bucket_name = os.environ['BUCKET']
 
 print('Starting OpenVAS')
 
@@ -128,4 +130,19 @@ for report_format, report_format_id in report_formats:
     f.write(report_response)
     f.close()
 
-print('Done!')
+# Set your S3 bucket name and local folder path
+local_folder = '/openvas/results/'
+
+# Create an S3 client
+s3 = boto3.client('s3')
+
+# Iterate through all files in the local folder
+for root, dirs, files in os.walk(local_folder):
+    for file in files:
+        # Construct the full file path
+        local_path = os.path.join(root, file)
+        # Construct the S3 file key
+        s3_path = os.path.relpath(local_path, local_folder)
+        # Upload the file to S3
+        s3.upload_file(local_path, bucket_name, s3_path + '/' + outputfile )
+
