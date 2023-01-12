@@ -8,7 +8,6 @@ RUN apt-get update && \
     wget curl rsync \
     bzip2 nmap pnscan x42-plugins ike-scan \
     openvas-scanner gvm gvmd \
-    openvas-manager-common \
     && apt-get clean
 
 # Pull in NVT scanning plugins
