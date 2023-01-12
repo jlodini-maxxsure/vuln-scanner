@@ -35,7 +35,7 @@ if [ -e /configuration/uploader.env ]; then
 fi
 
 if [ "x${SCAN_TARGETS_PATH}" == "x" ]; then
-    SCAN_TARGETS="/etc/openvas/scan-example.json"
+    SCAN_TARGETS="/tmp/config.json"
 else
     SCAN_TARGETS="${SCAN_TARGETS_PATH}"
 fi
