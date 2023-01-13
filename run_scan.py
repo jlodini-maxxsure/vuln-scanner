@@ -119,6 +119,10 @@ for report_format, report_format_id in report_formats:
     report_filename = os.path.split(outputfile)[1]
     if report_filename.endswith(".html"):
         report_filename = report_filename[:-len(".html")]
+    isExist = os.path.exists("/openvas/results/")
+    if not isExist:
+        os.makedirs("/openvas/results/")
+        
     export_path = "/openvas/results/{}.{}".format(report_filename, report_format)
     print('Writing {}-report to {}'.format(report_format.upper(), export_path))
 
