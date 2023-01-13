@@ -1,0 +1,1 @@
+aws s3 sync /openvas/results/ s3://$BUCKET/$EXECUTION_ID/
