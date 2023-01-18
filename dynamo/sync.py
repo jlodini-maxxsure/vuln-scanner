@@ -16,6 +16,7 @@ with open(filename, 'r') as file:
 
 # Put item into DynamoDB
 dynamodb.put_item(
+    TableName = "maxxscan-intel",
     Item={
         "ID": {"S": cognito_id}, 
         "Data": {"S": file_content}, 
