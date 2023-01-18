@@ -3,7 +3,7 @@ import boto3
 import os
 
 # Connect to DynamoDB
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.client('dynamodb',region_name=os.environ['AWS_REGION'])
 cognito_id = os.environ["CognitoID"]
 calling_domain = os.environ["CallingDomain"]
 resource = os.environ["DomainName"]
