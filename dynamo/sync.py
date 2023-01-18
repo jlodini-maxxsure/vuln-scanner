@@ -4,7 +4,6 @@ import os
 
 # Connect to DynamoDB
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('maxxscan-intel')
 cognito_id = os.environ["CognitoID"]
 calling_domain = os.environ["CallingDomain"]
 resource = os.environ["DomainName"]
@@ -16,4 +15,11 @@ with open('file.txt', 'r') as file:
     file_content = file.read()
 
 # Put item into DynamoDB
-table.put_item(Item={'ID: cognito_id, 'Data': file_content, 'CallingDomain': calling_domain, 'Resource': resource, 'Type': resource_type})
+dynamodb.put_item(
+    Item={
+        "ID": {"S": cognito_id}, 
+        "Data": {"S": file_content}, 
+        "CallingDomain": {"S": calling_domain}, 
+        "Resource": {"S": resource}, 
+        "Type": {"S": resource_type}
+        })
