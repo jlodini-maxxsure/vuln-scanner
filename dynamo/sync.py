@@ -11,7 +11,7 @@ outputfile = os.environ['EXECUTION_ID']
 resource_type = "VulnScan"
 # Read file
 filename="/openvas/results/" + outputfile  + ".xml"
-with open('file.txt', 'r') as file:
+with open(filename, 'r') as file:
     file_content = file.read()
 
 # Put item into DynamoDB
