@@ -30,7 +30,7 @@ data=protocol + "://" + resource + ":" + port
 file_content = file_content_data['report']['report']['host']
 file_content_parse = file_content['detail']
 for vuln_data in file_content_parse:
-    if (vuln_data['value'] != "EXIT_NOTVULN") and (vuln_data['value'] != "Greenbone Community Feed"):
+    if (vuln_data['value'] != "Greenbone Community Feed"):
         try:
             dynamodb.put_item(
             TableName = "maxxscan-vuln",
