@@ -41,7 +41,7 @@ outputfile = os.environ['EXECUTION_ID']
 print('Starting OpenVAS')
 
 os.system('BUILD=true /start')
-
+time.sleep(60)
 print('Starting scan with config {}'.format(options.config_id))
 
 omp_logon = "omp -u admin -w admin -h 127.0.0.1 -p 9390"
