@@ -3,6 +3,7 @@ import boto3
 import os
 import json
 import xmltodict
+from datetime import datetime
 
 dynamodb = boto3.client('dynamodb',region_name=os.environ['AWS_REGION'])
 cognito_id = os.environ["CognitoID"]
@@ -12,7 +13,13 @@ outputfile = os.environ['EXECUTION_ID']
 port = os.environ['PORT']
 protocol = os.environ['PROTOCOL']
 scan_type = os.environ['SCAN_TYPE']
+# Getting the current date and time
+dt = datetime.now()
+
+# getting the timestamp
+ts = datetime.timestamp(dt)
 # Read file
+
 filename="/openvas/results/" + outputfile  + ".xml"
 with open(filename) as xml_file:
     file_content_data = xmltodict.parse(xml_file.read())
@@ -32,7 +39,8 @@ for vuln_data in file_content_parse:
                 "CallingDomain": {"S": calling_domain}, 
                 "Resource": {"S": data}, 
                 "ScanType": {"S": "OPENVAS"}, 
-                "CWE": {"S": str(vuln_data['source']['name'])}
+                "CWE": {"S": str(vuln_data['source']['name'])},
+                "Last_Detected": {"S": ts}
                 })
         except Exception:
             continue
@@ -48,7 +56,8 @@ for vuln_data in file_content_parse:
             "CallingDomain": {"S": calling_domain}, 
             "Resource": {"S": data}, 
             "ScanType": {"S": "OPENVAS"}, 
-            "CWE": {"S": str(vuln_data['nvt']['@oid'])}
+            "CWE": {"S": str(vuln_data['nvt']['@oid'])},
+            "Last_Detected": {"S": ts}
             })
     except Exception:
         continue
