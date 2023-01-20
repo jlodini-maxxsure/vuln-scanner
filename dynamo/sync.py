@@ -36,6 +36,22 @@ for vuln_data in file_content_parse:
                 })
         except Exception:
             continue
+file_content = file_content_data['report']['report']['results']
+file_content_parse = file_content['result']
+for vuln_data in file_content_parse:
+    try:
+        dynamodb.put_item(
+        TableName = "maxxscan-vuln",
+        Item={
+            "ID": {"S": cognito_id}, 
+            "Data": {"S": str(vuln_data)}, 
+            "CallingDomain": {"S": calling_domain}, 
+            "Resource": {"S": data}, 
+            "ScanType": {"S": "OPENVAS"}, 
+            "CWE": {"S": str(vuln_data['nvt']['@oid'])}
+            })
+    except Exception:
+        continue
 
 dynamodb.put_item(
     TableName = "maxxscan-intel",
