@@ -4,6 +4,7 @@ import os
 import json
 import xmltodict
 from datetime import datetime
+import time
 
 dynamodb = boto3.client('dynamodb',region_name=os.environ['AWS_REGION'])
 cognito_id = os.environ["CognitoID"]
@@ -17,7 +18,7 @@ scan_type = os.environ['SCAN_TYPE']
 dt = datetime.now()
 
 # getting the timestamp
-ts = datetime.timestamp(dt)
+ts = time.mktime(dt.timetuple())
 # Read file
 
 filename="/openvas/results/" + outputfile  + ".xml"
