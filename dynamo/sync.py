@@ -16,9 +16,8 @@ protocol = os.environ['PROTOCOL']
 scan_type = os.environ['SCAN_TYPE']
 # Getting the current date and time
 dt = datetime.now()
-
-# getting the timestamp
 ts = time.mktime(dt.timetuple())
+time.sleep(10)
 # Read file
 
 filename="/openvas/results/" + outputfile  + ".xml"
