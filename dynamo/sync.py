@@ -41,7 +41,7 @@ for vuln_data in file_content_parse:
                 "Resource": {"S": data}, 
                 "ScanType": {"S": "OPENVAS"}, 
                 "CWE": {"S": str(vuln_data['source']['name'])},
-                "Last_Detected": {"S": ts}
+                "Last_Detected": {"S": str(ts)}
                 })
         except Exception:
             continue
