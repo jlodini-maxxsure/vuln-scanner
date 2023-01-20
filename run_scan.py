@@ -37,7 +37,6 @@ options, args = parser.parse_args()
 
 hosts = os.environ['TARGET']
 outputfile = os.environ['EXECUTION_ID']
-bucket_name = os.environ['BUCKET']
 
 print('Starting OpenVAS')
 
