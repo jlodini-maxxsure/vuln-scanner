@@ -15,15 +15,14 @@ scan_type = os.environ['SCAN_TYPE']
 # Read file
 filename="/openvas/results/" + outputfile  + ".xml"
 with open(filename) as xml_file:
-    data_dict = xmltodict.parse(xml_file.read())
-    file_content_data = json.dumps(data_dict)
+    file_content_data = xmltodict.parse(xml_file.read())
 type_field = "VulnScan-" + scan_type
 data=protocol + "://" + resource + ":" + port
 # Put item into DynamoDB
-file_content = file_content_data['report']['report']['results']
-file_content_parse = file_content['host']['detail']
+file_content = file_content_data['report']['report']['host']
+file_content_parse = file_content['detail']
 for vuln_data in file_content_parse:
-    if vuln_data['value'] != "EXIT_NOTVULN":
+    if (vuln_data['value'] != "EXIT_NOTVULN") and (vuln_data['value'] != "Greenbone Community Feed"):
         try:
             dynamodb.put_item(
             TableName = "maxxscan-vuln",
