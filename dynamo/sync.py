@@ -30,24 +30,6 @@ file_content = file_content_data['report']['report']['host']
 file_content_parse = file_content['detail']
 for vuln_data in file_content_parse:
     if (vuln_data['value'] != "Greenbone Community Feed"):
-        try:
-            dynamodb.put_item(
-            TableName = "maxxscan-vuln",
-            Item={
-                "ID": {"S": cognito_id}, 
-                "Data": {"S": str(vuln_data)}, 
-                "CallingDomain": {"S": calling_domain}, 
-                "Resource": {"S": data}, 
-                "ScanType": {"S": "OPENVAS"}, 
-                "CWE": {"S": str(vuln_data['source']['name'])},
-                "Last_Detected": {"S": str(ts)}
-                })
-        except Exception:
-            continue
-file_content = file_content_data['report']['report']['results']
-file_content_parse = file_content['result']
-for vuln_data in file_content_parse:
-    try:
         dynamodb.put_item(
         TableName = "maxxscan-vuln",
         Item={
@@ -56,11 +38,24 @@ for vuln_data in file_content_parse:
             "CallingDomain": {"S": calling_domain}, 
             "Resource": {"S": data}, 
             "ScanType": {"S": "OPENVAS"}, 
-            "CWE": {"S": str(vuln_data['nvt']['@oid'])},
+            "CWE": {"S": str(vuln_data['source']['name'])},
             "Last_Detected": {"S": str(ts)}
             })
-    except Exception:
-        continue
+
+file_content = file_content_data['report']['report']['results']
+file_content_parse = file_content['result']
+for vuln_data in file_content_parse:
+    dynamodb.put_item(
+    TableName = "maxxscan-vuln",
+    Item={
+        "ID": {"S": cognito_id}, 
+        "Data": {"S": str(vuln_data)}, 
+        "CallingDomain": {"S": calling_domain}, 
+        "Resource": {"S": data}, 
+        "ScanType": {"S": "OPENVAS"}, 
+        "CWE": {"S": str(vuln_data['nvt']['@oid'])},
+        "Last_Detected": {"S": str(ts)}
+        })
 
 dynamodb.put_item(
     TableName = "maxxscan-intel",
